@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Activity Recognition</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 15px;
+            border: 1px solid #007bff;
+            background-color: #e7f5ff;
+            border-radius: 4px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        .result strong {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Human Activity Recognition</h1>
+        <p>Enter the sensor readings (x, y, z) to predict the activity.</p>
+        <form method="POST">
+            <label for="x_val">X-axis Reading:</label>
+            <input type="text" id="x_val" name="x_val" required placeholder="e.g., 0.3">
+
+            <label for="y_val">Y-axis Reading:</label>
+            <input type="text" id="y_val" name="y_val" required placeholder="e.g., 0.5">
+
+            <label for="z_val">Z-axis Reading:</label>
+            <input type="text" id="z_val" name="z_val" required placeholder="e.g., 9.1">
+
+            <button type="submit">Predict Activity</button>
+        </form>
+
+        {% if predicted_activity %}
+            <div class="result">
+                <h3>Predicted Activity: <strong>{{ predicted_activity }}</strong></h3>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
