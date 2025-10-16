@@ -1,0 +1,5 @@
+Flask
+pandas
+numpy
+scikit-learn
+joblib # if you use it for saving/loading models
