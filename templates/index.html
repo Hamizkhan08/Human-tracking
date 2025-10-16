@@ -4,89 +4,252 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Human Activity Recognition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        /* General Body Styling */
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ece9e6, #ffffff); /* Light gradient background */
             color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
+
+        /* Container for the main card */
         .container {
-            max-width: 600px;
-            margin: 0 auto;
             background-color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #0056b3;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+            max-width: 500px;
+            width: 90%;
             text-align: center;
-            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out;
         }
+
+        /* Page Title */
+        h1 {
+            color: #2c3e50; /* Darker blue/grey for heading */
+            margin-bottom: 25px;
+            font-weight: 700;
+            font-size: 2.2em;
+        }
+
+        /* Subtitle/Description */
+        p {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Form Group Styling */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: bold;
+            font-weight: 400;
+            color: #555;
+            font-size: 0.95em;
         }
-        input[type="text"] {
-            width: calc(100% - 20px);
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
+
+        input[type="number"] { /* Changed to type="number" for better input */
             width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px; /* More rounded corners */
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
-        button:hover {
-            background-color: #0056b3;
+
+        input[type="number"]:focus {
+            border-color: #3498db; /* Blue on focus */
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+            outline: none;
         }
-        .result {
-            margin-top: 30px;
-            padding: 15px;
-            border: 1px solid #007bff;
-            background-color: #e7f5ff;
-            border-radius: 4px;
+
+        /* Button Styling */
+        button {
+            background-color: #3498db; /* Primary blue */
+            color: white;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             font-size: 1.1em;
-            text-align: center;
+            font-weight: 700;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
         }
-        .result strong {
-            color: #0056b3;
+
+        button:hover {
+            background-color: #2980b9; /* Slightly darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Result Display Area */
+        #predictionResult {
+            margin-top: 35px;
+            padding: 20px;
+            border: 1px solid #cceeff; /* Light blue border */
+            background-color: #eaf7ff; /* Very light blue background */
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #2c3e50;
+            min-height: 60px; /* Ensure space even when empty */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease-out; /* Smooth transition for content change */
+            opacity: 0; /* Initially hidden */
+            transform: translateY(10px);
+        }
+
+        #predictionResult.show {
+            opacity: 1; /* Show when content is ready */
+            transform: translateY(0);
+        }
+
+        #predictionResult strong {
+            color: #007bff; /* Brighter blue for the actual prediction */
+        }
+
+        /* Loading Spinner (CSS only) */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3498db;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Animation for container */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+                margin: 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            button {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+            #predictionResult {
+                font-size: 1em;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Human Activity Recognition</h1>
-        <p>Enter the sensor readings (x, y, z) to predict the activity.</p>
-        <form method="POST">
-            <label for="x_val">X-axis Reading:</label>
-            <input type="text" id="x_val" name="x_val" required placeholder="e.g., 0.3">
+        <h1>Detect Human Activity</h1>
+        <p>Input the accelerometer readings (X, Y, Z) and click 'Predict' to identify the activity.</p>
 
-            <label for="y_val">Y-axis Reading:</label>
-            <input type="text" id="y_val" name="y_val" required placeholder="e.g., 0.5">
+        <form id="predictionForm">
+            <div class="form-group">
+                <label for="x_val">X-axis Reading:</label>
+                <input type="number" id="x_val" name="x_val" required placeholder="e.g., 0.3" step="any">
+            </div>
 
-            <label for="z_val">Z-axis Reading:</label>
-            <input type="text" id="z_val" name="z_val" required placeholder="e.g., 9.1">
+            <div class="form-group">
+                <label for="y_val">Y-axis Reading:</label>
+                <input type="number" id="y_val" name="y_val" required placeholder="e.g., 0.5" step="any">
+            </div>
 
-            <button type="submit">Predict Activity</button>
+            <div class="form-group">
+                <label for="z_val">Z-axis Reading:</label>
+                <input type="number" id="z_val" name="z_val" required placeholder="e.g., 9.1" step="any">
+            </div>
+
+            <button type="submit" id="predictButton">
+                Predict Activity
+            </button>
         </form>
 
-        {% if predicted_activity %}
-            <div class="result">
-                <h3>Predicted Activity: <strong>{{ predicted_activity }}</strong></h3>
-            </div>
-        {% endif %}
+        <div id="predictionResult">
+            <!-- Prediction will be displayed here -->
+        </div>
     </div>
-</body>
 
+    <script>
+        document.getElementById('predictionForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission (page reload)
+
+            const x_val = parseFloat(document.getElementById('x_val').value);
+            const y_val = parseFloat(document.getElementById('y_val').value);
+            const z_val = parseFloat(document.getElementById('z_val').value);
+
+            const resultDiv = document.getElementById('predictionResult');
+            const predictButton = document.getElementById('predictButton');
+
+            // Clear previous result and show loading state
+            resultDiv.classList.remove('show');
+            resultDiv.innerHTML = '<span class="spinner"></span> Predicting...';
+            predictButton.disabled = true; // Disable button during prediction
+
+            // Basic validation
+            if (isNaN(x_val) || isNaN(y_val) || isNaN(z_val)) {
+                resultDiv.innerHTML = 'Please enter valid numbers for all fields.';
+                resultDiv.classList.add('show');
+                predictButton.disabled = false;
+                return;
+            }
+
+            try {
+                const response = await fetch('/predict_api', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ x: x_val, y: y_val, z: z_val })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    resultDiv.innerHTML = `<h3>Predicted Activity: <strong>${data.prediction}</strong></h3>`;
+                } else {
+                    resultDiv.innerHTML = `Error: ${data.error || 'Something went wrong.'}`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `An unexpected error occurred: ${error.message}`;
+                console.error('Fetch error:', error);
+            } finally {
+                resultDiv.classList.add('show'); // Show the result
+                predictButton.disabled = false; // Re-enable button
+            }
+        });
+    </script>
+</body>
 </html>
