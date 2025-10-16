@@ -3,47 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Human Activity Recognition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Human Activity Recognition - Dark Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* General Body Styling */
+        /* Global Styles & Variables */
+        :root {
+            --bg-dark: #1a1a1a;
+            --bg-medium: #2c2c2c;
+            --bg-light: #3a3a3a;
+            --text-light: #e0e0e0;
+            --text-medium: #bbbbbb;
+            --primary-color: #00bcd4; /* Cyan/Teal */
+            --primary-hover: #00acc1;
+            --accent-color: #ffd700; /* Gold for highlight */
+            --border-color: #444;
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #ece9e6, #ffffff); /* Light gradient background */
-            color: #333;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
-        /* Container for the main card */
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: var(--bg-medium);
+            padding: 15px 30px;
+            box-shadow: 0 4px 10px var(--shadow-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.8em;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            animation: slideInLeft 0.8s ease-out;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .navbar-nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 400;
+            font-size: 1.05em;
+            transition: color 0.3s ease;
+            animation: slideInRight 0.8s ease-out;
+            animation-delay: 0.2s; /* Stagger animation */
+            animation-fill-mode: backwards;
+        }
+
+        .navbar-nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: url('https://via.placeholder.com/1920x600/1a1a1a/00bcd4?text=ACTIVITY+RECOGNITION') no-repeat center center/cover; /* Placeholder background image */
+            padding: 80px 30px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1; /* Allows hero to take up available space */
+            min-height: 400px; /* Minimum height for hero */
+        }
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6); /* Dark overlay */
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+            animation: bounceIn 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: var(--text-medium);
+            animation: fadeIn 1.2s ease-out 0.5s backwards;
+        }
+
+        .hero-button {
+            background-color: var(--primary-color);
+            color: var(--bg-dark); /* Dark text on primary button */
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px; /* Pill shape */
+            font-size: 1.1em;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            animation: fadeIn 1.2s ease-out 0.8s backwards;
+        }
+
+        .hero-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px var(--shadow-color);
+        }
+
+        /* Main Content Area */
+        main {
+            flex-grow: 1; /* Allows main content to take up available space */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align form to top, allowing hero to push it down */
+            padding: 40px 20px;
+        }
+
+        /* Container for the main card (Prediction Form) */
         .container {
-            background-color: #fff;
+            background-color: var(--bg-medium);
             padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
+            box-shadow: 0 10px 25px var(--shadow-color);
             max-width: 500px;
             width: 90%;
             text-align: center;
             animation: fadeIn 1s ease-out;
+            border: 1px solid var(--border-color);
         }
 
-        /* Page Title */
-        h1 {
-            color: #2c3e50; /* Darker blue/grey for heading */
+        h3 {
+            color: var(--primary-color);
             margin-bottom: 25px;
             font-weight: 700;
-            font-size: 2.2em;
+            font-size: 1.8em;
         }
 
-        /* Subtitle/Description */
-        p {
-            color: #7f8c8d;
+        .container p {
+            color: var(--text-medium);
             margin-bottom: 30px;
             line-height: 1.6;
+            font-size: 0.95em;
         }
 
         /* Form Group Styling */
@@ -56,30 +213,32 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 400;
-            color: #555;
+            color: var(--text-light);
             font-size: 0.95em;
         }
 
-        input[type="number"] { /* Changed to type="number" for better input */
+        input[type="number"] {
             width: 100%;
             padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px; /* More rounded corners */
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            border-radius: 8px;
             box-sizing: border-box;
             font-size: 1em;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         input[type="number"]:focus {
-            border-color: #3498db; /* Blue on focus */
-            box-shadow: 0 0 8px rgba(52, 152, 219, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px rgba(0, 188, 212, 0.3);
             outline: none;
         }
 
         /* Button Styling */
         button {
-            background-color: #3498db; /* Primary blue */
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--bg-dark);
             padding: 14px 25px;
             border: none;
             border-radius: 8px;
@@ -92,11 +251,17 @@
         }
 
         button:hover {
-            background-color: #2980b9; /* Slightly darker blue on hover */
-            transform: translateY(-2px); /* Slight lift effect */
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
         }
 
         button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
             transform: translateY(0);
         }
 
@@ -104,34 +269,34 @@
         #predictionResult {
             margin-top: 35px;
             padding: 20px;
-            border: 1px solid #cceeff; /* Light blue border */
-            background-color: #eaf7ff; /* Very light blue background */
+            border: 1px solid var(--primary-color);
+            background-color: rgba(0, 188, 212, 0.1); /* Lighter primary color with transparency */
             border-radius: 8px;
             font-size: 1.2em;
             font-weight: 700;
-            color: #2c3e50;
-            min-height: 60px; /* Ensure space even when empty */
+            color: var(--text-light);
+            min-height: 60px;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.5s ease-out; /* Smooth transition for content change */
-            opacity: 0; /* Initially hidden */
+            transition: all 0.5s ease-out;
+            opacity: 0;
             transform: translateY(10px);
         }
 
         #predictionResult.show {
-            opacity: 1; /* Show when content is ready */
+            opacity: 1;
             transform: translateY(0);
         }
 
         #predictionResult strong {
-            color: #007bff; /* Brighter blue for the actual prediction */
+            color: var(--accent-color); /* Gold for prediction highlight */
         }
 
-        /* Loading Spinner (CSS only) */
+        /* Loading Spinner */
         .spinner {
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #3498db;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-left-color: var(--primary-color);
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -146,20 +311,45 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Animation for container */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Footer */
+        footer {
+            background-color: var(--bg-medium);
+            color: var(--text-medium);
+            text-align: center;
+            padding: 20px;
+            margin-top: auto; /* Pushes footer to the bottom */
+            box-shadow: 0 -4px 10px var(--shadow-color);
+            font-size: 0.9em;
         }
 
         /* Responsive adjustments */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 20px;
+            }
+            .navbar-brand {
+                margin-bottom: 15px;
+            }
+            .navbar-nav a {
+                margin: 0 10px;
+            }
+            .hero-section {
+                padding: 60px 20px;
+                min-height: 300px;
+            }
+            .hero-content h2 {
+                font-size: 2.5em;
+            }
+            .hero-content p {
+                font-size: 1.1em;
+            }
             .container {
-                padding: 25px;
+                padding: 30px;
                 margin: 20px;
             }
-            h1 {
-                font-size: 1.8em;
+            h3 {
+                font-size: 1.5em;
             }
             button {
                 font-size: 1em;
@@ -169,38 +359,86 @@
                 font-size: 1em;
             }
         }
+
+        @media (max-width: 480px) {
+            .navbar-brand {
+                font-size: 1.5em;
+            }
+            .navbar-nav {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .navbar-nav a {
+                margin: 5px 8px;
+            }
+            .hero-content h2 {
+                font-size: 2em;
+            }
+            .hero-content p {
+                font-size: 0.95em;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Detect Human Activity</h1>
-        <p>Input the accelerometer readings (X, Y, Z) and click 'Predict' to identify the activity.</p>
-
-        <form id="predictionForm">
-            <div class="form-group">
-                <label for="x_val">X-axis Reading:</label>
-                <input type="number" id="x_val" name="x_val" required placeholder="e.g., 0.3" step="any">
-            </div>
-
-            <div class="form-group">
-                <label for="y_val">Y-axis Reading:</label>
-                <input type="number" id="y_val" name="y_val" required placeholder="e.g., 0.5" step="any">
-            </div>
-
-            <div class="form-group">
-                <label for="z_val">Z-axis Reading:</label>
-                <input type="number" id="z_val" name="z_val" required placeholder="e.g., 9.1" step="any">
-            </div>
-
-            <button type="submit" id="predictButton">
-                Predict Activity
-            </button>
-        </form>
-
-        <div id="predictionResult">
-            <!-- Prediction will be displayed here -->
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="navbar-brand">
+            <i class="fas fa-running"></i> Human Activity Detector
+        </a>
+        <div class="navbar-nav">
+            <a href="#prediction-section">Predict</a>
+            <!-- Add more navigation links here if needed -->
         </div>
-    </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h2>Unravel Human Activity </h2>
+            <p>Leveraging sensor data to accurately identify movements and behaviors in real-time. Simply input the accelerometer readings below to get started.</p>
+            <a href="#prediction-section" class="hero-button">Get Started</a>
+        </div>
+    </section>
+
+    <!-- Main Content Area: Prediction Form -->
+    <main id="prediction-section">
+        <div class="container">
+            <h3>Detect Human Activity</h3>
+            <p>Input the accelerometer readings (X, Y, Z) and click 'Predict' to identify the activity.</p>
+
+            <form id="predictionForm">
+                <div class="form-group">
+                    <label for="x_val">X-axis Reading:</label>
+                    <input type="number" id="x_val" name="x_val" required placeholder="e.g., 0.3" step="any">
+                </div>
+
+                <div class="form-group">
+                    <label for="y_val">Y-axis Reading:</label>
+                    <input type="number" id="y_val" name="y_val" required placeholder="e.g., 0.5" step="any">
+                </div>
+
+                <div class="form-group">
+                    <label for="z_val">Z-axis Reading:</label>
+                    <input type="number" id="z_val" name="z_val" required placeholder="e.g., 9.1" step="any">
+                </div>
+
+                <button type="submit" id="predictButton">
+                    Predict Activity
+                </button>
+            </form>
+
+            <div id="predictionResult">
+                <!-- Prediction will be displayed here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Human Activity Recognition. All rights reserved.</p>
+    </footer>
 
     <script>
         document.getElementById('predictionForm').addEventListener('submit', async function(event) {
@@ -249,6 +487,17 @@
                 resultDiv.classList.add('show'); // Show the result
                 predictButton.disabled = false; // Re-enable button
             }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </body>
